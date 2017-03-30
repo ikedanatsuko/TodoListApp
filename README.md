@@ -36,7 +36,17 @@ MVCモデルのつもりです
 - データベースのそれぞれのテーブルに対応したDao、Entity、Serviceのクラスを作成
 - 表示画面ごとにControllerクラスを作成
   - トップ画面に画面遷移する処理はHomeController、Todo詳細画面に画面遷移する処理はTodoController、みたいにした
-### データベース
+#### データベース
 - Todoリストテーブル
 - Todoテーブル
 - 褒め言葉テーブル
+
+## 開発環境のセットアップ手順  
+- Java
+  - JDK 8 とEclipse（Version: Neon.2 Release (4.6.2)）をインストール
+- Spring Framework
+  - Eclipseにspring tool suiteプラグインをインストール（Spring Tool Suite (STS) for Eclipse 3.8.3 RELEASE）
+- サーバ
+  - [ここ](http://qiita.com/park-jh/items/08bb2541943f92e1feb1 "springの再入門 - eclipseでスタート")を参考にして Pivotal tc Server Developer Editionを設置
+- データベース
+  - PostgreSQLをインストール
