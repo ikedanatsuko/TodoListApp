@@ -42,17 +42,7 @@ public class TodoServiceImpl implements TodoService {
 	}
 	
 	@Transactional
-	public void updateTodo(Todo todo) {
-		todoDao.updateTodo(todo);
-	}
-	
-	@Transactional
 	public void addTodo(Todo todo) {
 		todoDao.addTodo(todo);
-	}
-	
-	@Transactional
-	public void removeTodo(Todo todo) {
-		todoDao.removeTodo(todo);
 	}
 }

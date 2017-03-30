@@ -24,17 +24,7 @@ public class TodoListServiceImpl implements TodoListService {
 	}
 	
 	@Transactional
-	public void updateTodolist(TodoList todolist) {
-		todoListDao.updateTodolist(todolist);
-	}
-	
-	@Transactional
 	public void addTodolist(TodoList todolist) {
 		todoListDao.addTodolist(todolist);
-	}
-	
-	@Transactional
-	public void removeTodolist(TodoList todoList) {
-		todoListDao.removeTodolist(todoList);
 	}
 }

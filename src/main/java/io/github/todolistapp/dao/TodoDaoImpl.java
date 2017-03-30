@@ -82,11 +82,6 @@ public class TodoDaoImpl implements TodoDao {
 		String sql = "UPDATE todo SET done = true WHERE id = ?";
 		jdbcTemplate.update(sql, todo.getId());
 	}
-	
-	public void updateTodo(Todo todo) {
-		String sql = "UPDATE todo SET list_id = ?, detail = ?, done = ? WHERE id = ?";
-		jdbcTemplate.update(sql, todo.getListId(), todo.getDetail(), todo.getDone(), todo.getId());
-	}
 
 	public void addTodo(Todo todo) {
 		String sql = "INSERT INTO todo (list_id, detail, done) VALUES(?, ?, ?)";
@@ -94,10 +89,5 @@ public class TodoDaoImpl implements TodoDao {
 		
 		String sql_getid = "SELECT setval('todo_id_seq', (SELECT MAX(id) FROM todo))";
 		todo.setId(jdbcTemplate.queryForObject(sql_getid, Integer.class));
-	}
-
-	public void removeTodo(Todo todo) {
-		String sql = "DELETE FROM todo WHERE id = ?";
-		jdbcTemplate.update(sql, todo.getId());
 	}
 }

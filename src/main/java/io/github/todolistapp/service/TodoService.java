@@ -18,9 +18,5 @@ public interface TodoService {
 	
 	public void finish(Todo todo);
 	
-	public void updateTodo(Todo todo);
-	
 	public void addTodo(Todo todo);
-	
-	public void removeTodo(Todo todo);
 }

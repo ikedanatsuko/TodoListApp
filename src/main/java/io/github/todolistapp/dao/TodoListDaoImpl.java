@@ -50,27 +50,11 @@ public class TodoListDaoImpl implements TodoListDao {
 		return todolists;
 	}
 
-	public void updateTodolist(TodoList todolist) {
-		if (todolist.getDeadline() != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String sql = "UPDATE todolist SET title = ?, deadline = DATE'?'";
-			jdbcTemplate.update(sql, todolist.getTitle(), sdf.format(todolist.getDeadline()));
-		} else {
-			String sql = "UPDATE todolist SET title = ?";
-			jdbcTemplate.update(sql, todolist.getTitle());
-		}
-	}
-
 	public void addTodolist(TodoList todolist) {
 		String sql = "INSERT INTO todolist (title) VALUES(?)";
 		jdbcTemplate.update(sql, todolist.getTitle());
 
 		String sql_getid = "SELECT setval('todolist_id_seq', (SELECT MAX(id) FROM todolist))";
 		todolist.setId(jdbcTemplate.queryForObject(sql_getid, Integer.class));
-	}
-
-	public void removeTodolist(TodoList todolist) {
-		String sql = "DELETE FROM todolist WHERE id = ?";
-		jdbcTemplate.update(sql, todolist.getId());
 	}
 }
