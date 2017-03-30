@@ -19,6 +19,12 @@ public class SearchController {
 	@Autowired
 	private TodoService todoService;
 	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String search(Model model) {
+
+		return "search";
+	}
+	
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String getResult(Model model, @RequestParam("searchWord") String searchWord) {
 		List<Todo> todosByWord = todoService.getTodosByWord(searchWord);

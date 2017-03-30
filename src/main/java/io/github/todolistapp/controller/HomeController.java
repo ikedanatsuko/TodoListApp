@@ -37,32 +37,6 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search(Model model) {
-
-		return "search";
-	}
-
-	@RequestMapping(value = "/todolist/{listId}/edit", method = RequestMethod.GET)
-	public String editTodolist(Model model, @ModelAttribute("message") String message,
-			@PathVariable("listId") int listId) {
-		TodoList todoList = todoListService.getTodolistById(listId);
-		model.addAttribute("todoList", todoList);
-
-		List<Todo> todosByList = todoService.getTodosByList(listId);
-		model.addAttribute("todosByList", todosByList);
-
-		model.addAttribute("finishTodo", new Todo());
-
-		if (message.isEmpty()) {
-			model.addAttribute("message", "あと" + todoService.getUndoCount(listId) + "個で終わり！");
-		} else {
-			model.addAttribute("message", message);
-		}
-
-		return "todo";
-	}
-
 	@RequestMapping(value = "/todolist/create", method = RequestMethod.POST)
 	public String createTodolist(Model model, @ModelAttribute TodoList todoList) {
 		todoListService.addTodolist(todoList);

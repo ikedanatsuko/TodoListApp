@@ -25,7 +25,30 @@ public class TodoController {
 	private TodoService todoService;
 	
 	@Autowired
+	private TodoListService todoListService;
+	
+	@Autowired
 	private EncomiumService encomiumService;
+	
+	@RequestMapping(value = "/todolist/{listId}/edit", method = RequestMethod.GET)
+	public String editTodolist(Model model, @ModelAttribute("message") String message,
+			@PathVariable("listId") int listId) {
+		TodoList todoList = todoListService.getTodolistById(listId);
+		model.addAttribute("todoList", todoList);
+
+		List<Todo> todosByList = todoService.getTodosByList(listId);
+		model.addAttribute("todosByList", todosByList);
+
+		model.addAttribute("finishTodo", new Todo());
+
+		if (message.isEmpty()) {
+			model.addAttribute("message", "あと" + todoService.getUndoCount(listId) + "個で終わり！");
+		} else {
+			model.addAttribute("message", message);
+		}
+
+		return "todo";
+	}
 	
 	@RequestMapping(value = "/todo/{todoId}", method = RequestMethod.GET)
 	public String editTodo(Model model, @PathVariable("todoId") int todoId) {
