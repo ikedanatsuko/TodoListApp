@@ -36,12 +36,20 @@ MVCモデルのつもりです
 - データベースのそれぞれのテーブルに対応したDao、Entity、Serviceのクラスを作成
 - 表示画面ごとにControllerクラスを作成
   - トップ画面に画面遷移する処理はHomeController、Todo詳細画面に画面遷移する処理はTodoController、みたいにした
+  
 #### データベース
 - Todoリストテーブル
+  - id serial PRIMARY KEY
+  - title text NOT NULL
 - Todoテーブル
+  - id serial PRIMARY KEY
+  - list_id int NOT NULL
+  - detail text NOT NULL
 - 褒め言葉テーブル
+  - id serial PRIMARY KEY
+  - message text NOT NULL
 
-## 開発環境のセットアップ手順  
+## 開発環境のセットアップ手順  
 - Java
   - JDK 8 とEclipse（Version: Neon.2 Release (4.6.2)）をインストール
 - Spring Framework
