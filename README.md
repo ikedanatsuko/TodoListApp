@@ -55,5 +55,5 @@ MVCモデルのつもりです
   - [ここ](http://qiita.com/park-jh/items/08bb2541943f92e1feb1 "springの再入門 - eclipseでスタート")を参考にして Pivotal tc Server Developer Editionを設置
 - データベース
   - PostgreSQLをインストール
-  - spring-jdbc（4.3.6.RELEASE）をライブラリに追加
-  - DBアクセスするためのDriverManagerDataSourceを定義
+  - spring-jdbc（4.3.6.RELEASE）をライブラリに追加
+  - DBアクセスするためのDriverManagerDataSourceを定義
