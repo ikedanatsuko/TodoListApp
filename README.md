@@ -64,4 +64,4 @@ MVCモデルのつもりです
 - データベース
   - PostgreSQLをインストール
   - spring-jdbc（4.3.6.RELEASE）をライブラリに追加
-  - DBアクセスするためのDriverManagerDataSourceを定義
+  - DBアクセスするためのDriverManagerDataSourceをmvc-config.xmlで定義
