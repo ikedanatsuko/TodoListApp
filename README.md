@@ -46,12 +46,14 @@ MVCモデルのつもりです
   - JDK 8 とEclipse（Version: Neon.2 Release (4.6.2)）をインストール
 - Spring Framework
   - Eclipseにspring tool suiteプラグインをインストール（Spring Tool Suite (STS) for Eclipse 3.8.3 RELEASE）
-  - Spring Frameworkをプロジェクトのライブラリとして使用できるうようにする
-    - Eclipseで New → Spring Legacy Project
-    - Templates:で「Simple Spring Web Maven」を選ぶ
-    - プロジェクトを右クリックで Maven → Upgrade Project でアップグレード
-    - プロジェクトを右クリック → Run As → 9 Maven install
+  - Spring Frameworkをプロジェクトのライブラリとして使用できるようにする  
+    Eclipseで New → Spring Legacy Project  
+    Templates:で「Simple Spring Web Maven」を選ぶ  
+    プロジェクトを右クリックで Maven → Upgrade Project でアップグレード  
+    プロジェクトを右クリック → Run As → 9 Maven install
 - サーバ
   - [ここ](http://qiita.com/park-jh/items/08bb2541943f92e1feb1 "springの再入門 - eclipseでスタート")を参考にして Pivotal tc Server Developer Editionを設置
 - データベース
   - PostgreSQLをインストール
+  - spring-jdbc（4.3.6.RELEASE）をライブラリに追加
+  - DBアクセスするためのDriverManagerDataSourceを定義
