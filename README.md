@@ -49,7 +49,7 @@ MVCモデルのつもりです
   - id serial PRIMARY KEY
   - message text NOT NULL
 
-## 開発環境のセットアップ手順  
+## 開発環境のセットアップ手順
 - Java
   - JDK 8 とEclipse（Version: Neon.2 Release (4.6.2)）をインストール
 - Spring Framework
