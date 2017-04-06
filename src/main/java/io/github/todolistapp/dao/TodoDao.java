@@ -8,13 +8,13 @@ public interface TodoDao {
 	
 	public Todo getTodoById(int id);
 	
-	public List<Todo> getTodosByList(int list_id);
+	public List<Todo> getTodosByList(int listId);
 	
-	public List<Todo> getTodosByWord(String search_word);
+	public List<Todo> getTodosByWord(String searchWord);
 	
-	public int getUndoCount(int list_id);
+	public int getUndoCount(int listId);
 	
-	public void bindList(Todo todo, int list_id);
+	public void bindList(Todo todo, int listId);
 	
 	public void finish(Todo todo);
 	

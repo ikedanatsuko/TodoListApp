@@ -33,9 +33,9 @@ public class TodoDaoImpl implements TodoDao {
 		return todo;
 	}
 
-	public List<Todo> getTodosByList(int list_id) {
+	public List<Todo> getTodosByList(int listId) {
 		String sql = "SELECT * FROM todo WHERE list_id= ?";
-		List<Todo> todos = jdbcTemplate.query(sql, new Object[] { list_id },
+		List<Todo> todos = jdbcTemplate.query(sql, new Object[] { listId },
 				new RowMapper<Todo>() {
 			public Todo mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Todo todo = new Todo();
@@ -49,10 +49,10 @@ public class TodoDaoImpl implements TodoDao {
 		return todos;
 	}
 	
-	public List<Todo> getTodosByWord(String search_word) {
+	public List<Todo> getTodosByWord(String searchWord) {
 		String sql = "SELECT * FROM todo WHERE detail LIKE ?";
-		search_word = "%" + search_word + "%";
-		List<Todo> todos = jdbcTemplate.query(sql, new Object[] { search_word },
+		searchWord = "%" + searchWord + "%";
+		List<Todo> todos = jdbcTemplate.query(sql, new Object[] { searchWord },
 				new RowMapper<Todo>() {
 			public Todo mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Todo todo = new Todo();
@@ -66,16 +66,16 @@ public class TodoDaoImpl implements TodoDao {
 		return todos;
 	}
 	
-	public int getUndoCount(int list_id) {
+	public int getUndoCount(int listId) {
 		String sql = "SELECT count(*) FROM todo WHERE done = false AND list_id = ?";
-		int count = jdbcTemplate.queryForObject(sql, Integer.class, list_id);
+		int count = jdbcTemplate.queryForObject(sql, Integer.class, listId);
 		
 		return count;
 	}
 	
-	public void bindList(Todo todo, int list_id) {
+	public void bindList(Todo todo, int listId) {
 		String sql = "UPDATE todo SET list_id = ? WHERE id = ?";
-		jdbcTemplate.update(sql, list_id, todo.getId());
+		jdbcTemplate.update(sql, listId, todo.getId());
 	}
 	
 	public void finish(Todo todo) {
@@ -87,7 +87,7 @@ public class TodoDaoImpl implements TodoDao {
 		String sql = "INSERT INTO todo (list_id, detail, done) VALUES(?, ?, ?)";
 		jdbcTemplate.update(sql, todo.getListId(), todo.getDetail(), todo.getDone());
 		
-		String sql_getid = "SELECT setval('todo_id_seq', (SELECT MAX(id) FROM todo))";
-		todo.setId(jdbcTemplate.queryForObject(sql_getid, Integer.class));
+		String sqlGetid = "SELECT setval('todo_id_seq', (SELECT MAX(id) FROM todo))";
+		todo.setId(jdbcTemplate.queryForObject(sqlGetid, Integer.class));
 	}
 }

@@ -55,7 +55,7 @@ public class EncomiumDaoImpl implements EncomiumDao {
 		String sql = "INSERT INTO encomium (message) VALUES(?)";
 		jdbcTemplate.update(sql, encomium.getMessage());
 		
-		String sql_getid = "SELECT setval('encomium_id_seq', (SELECT MAX(id) FROM encomium))";
-		encomium.setId(jdbcTemplate.queryForObject(sql_getid, Integer.class));
+		String sqlGetid = "SELECT setval('encomium_id_seq', (SELECT MAX(id) FROM encomium))";
+		encomium.setId(jdbcTemplate.queryForObject(sqlGetid, Integer.class));
 	}
 }

@@ -19,21 +19,21 @@ public class TodoServiceImpl implements TodoService {
 		return todoDao.getTodoById(id);
 	}
 
-	public List<Todo> getTodosByList(int list_id) {
-		return todoDao.getTodosByList(list_id);
+	public List<Todo> getTodosByList(int listId) {
+		return todoDao.getTodosByList(listId);
 	}
 	
 	public List<Todo> getTodosByWord(String search_word) {
 		return todoDao.getTodosByWord(search_word);
 	}
 	
-	public int getUndoCount(int list_id) {
-		return todoDao.getUndoCount(list_id);
+	public int getUndoCount(int listId) {
+		return todoDao.getUndoCount(listId);
 	}
 	
 	@Transactional
-	public void bindList(Todo todo, int list_id) {
-		todoDao.bindList(todo, list_id);
+	public void bindList(Todo todo, int listId) {
+		todoDao.bindList(todo, listId);
 	}
 	
 	@Transactional

@@ -54,7 +54,7 @@ public class TodoListDaoImpl implements TodoListDao {
 		String sql = "INSERT INTO todolist (title) VALUES(?)";
 		jdbcTemplate.update(sql, todolist.getTitle());
 
-		String sql_getid = "SELECT setval('todolist_id_seq', (SELECT MAX(id) FROM todolist))";
-		todolist.setId(jdbcTemplate.queryForObject(sql_getid, Integer.class));
+		String sqlGetid = "SELECT setval('todolist_id_seq', (SELECT MAX(id) FROM todolist))";
+		todolist.setId(jdbcTemplate.queryForObject(sqlGetid, Integer.class));
 	}
 }
