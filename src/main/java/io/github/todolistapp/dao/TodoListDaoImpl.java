@@ -8,7 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.exception.DataException;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -25,15 +28,18 @@ public class TodoListDaoImpl implements TodoListDao {
 	private JdbcTemplate jdbcTemplate;
 
 	// Get todolist by id
-	public TodoList getTodolistById(int id) {
+	public TodoList getTodolistById(int id) throws DataException {
 		String sql = "SELECT * FROM todolist WHERE id= ?";
-		Map map = jdbcTemplate.queryForMap(sql, id);
-		TodoList todolist = new TodoList();
+		try {
+			Map map = jdbcTemplate.queryForMap(sql, id);
+			TodoList todolist = new TodoList();
+			todolist.setId((Integer) map.get("id"));
+			todolist.setTitle((String) map.get("title"));
 
-		todolist.setId((Integer) map.get("id"));
-		todolist.setTitle((String) map.get("title"));
-
-		return todolist;
+			return todolist;
+		} catch (EmptyResultDataAccessException e) {
+			throw new ServiceException("Todoリストが見つかりません");
+		}
 	}
 
 	// Get all todolist
@@ -44,6 +50,7 @@ public class TodoListDaoImpl implements TodoListDao {
 				TodoList todolist = new TodoList();
 				todolist.setId(rs.getInt("id"));
 				todolist.setTitle(rs.getString("title"));
+
 				return todolist;
 			}
 		});
@@ -56,5 +63,25 @@ public class TodoListDaoImpl implements TodoListDao {
 
 		String sqlGetid = "SELECT setval('todolist_id_seq', (SELECT MAX(id) FROM todolist))";
 		todolist.setId(jdbcTemplate.queryForObject(sqlGetid, Integer.class));
+	}
+
+	public void updateTodolist(TodoList todoList) {
+		try {
+			Map map = jdbcTemplate.queryForMap("SELECT * FROM todolist WHERE id= ?", todoList.getId());
+		} catch (EmptyResultDataAccessException e) {
+			throw new ServiceException("Todoリストが見つかりません");
+		}
+		String sql = "UPDATE todolist SET title = ? WHERE id = ?";
+		jdbcTemplate.update(sql, todoList.getId());
+	}
+
+	public void removeTodolist(TodoList todoList) {
+		try {
+			Map map = jdbcTemplate.queryForMap("SELECT * FROM todolist WHERE id= ?", todoList.getId());
+		} catch (EmptyResultDataAccessException e) {
+			throw new ServiceException("Todoリストが見つかりません");
+		}
+		String sql = "DELETE FROM todolist WHERE id = ?";
+		jdbcTemplate.update(sql, todoList.getId());
 	}
 }

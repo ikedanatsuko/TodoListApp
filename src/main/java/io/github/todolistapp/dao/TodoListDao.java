@@ -12,4 +12,8 @@ public interface TodoListDao {
 	public List<TodoList> getAllTodolist();
 	
 	public void addTodolist(TodoList todolist);
+	
+	public void updateTodolist(TodoList todoList);
+	
+	public void removeTodolist(TodoList todoList);
 }
