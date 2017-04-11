@@ -2,9 +2,13 @@ package io.github.todolistapp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +34,13 @@ public class TodoController {
 	private EncomiumService encomiumService;
 	
 	@RequestMapping(value = "/todolist/{listId}/edit", method = RequestMethod.GET)
-	public String editTodolist(Model model, @ModelAttribute("message") String message,
+	public String editTodolist(ModelMap model, @ModelAttribute("message") String message,
 			@PathVariable("listId") int listId) {
+		String key = BindingResult.MODEL_KEY_PREFIX + "todo";
+		if (model.containsKey("result")) {
+			model.addAttribute(key, model.get("result"));
+		}
+		
 		TodoList todoList = todoListService.getTodolistById(listId);
 		model.addAttribute("todoList", todoList);
 
@@ -57,15 +66,21 @@ public class TodoController {
 	}
 	
 	@RequestMapping(value = "todolist/{listId}/todo/create", method = RequestMethod.POST)
-	public String createTodo(Model model, @ModelAttribute Todo todo, @PathVariable("listId") int listId) {
-		todoService.addTodo(todo);
-		todoService.bindList(todo, listId);
+	public String createTodo(Model model, @Valid @ModelAttribute Todo todo, BindingResult result,
+			@PathVariable("listId") int listId, RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("result", result);
+		} else {
+			todoService.addTodo(todo);
+			todoService.bindList(todo, listId);
+		}
 		
 		return "redirect:/todolist/{listId}/edit";
 	}
 	
 	@RequestMapping(value = "todolist/{listId}/todo/{todoId}/finish", method = RequestMethod.POST)
-	public String finish(Model model, RedirectAttributes redirectAttributes, @ModelAttribute Todo todo, @PathVariable("todoId") int todoId, @PathVariable("listId") int listId){
+	public String finish(Model model, @ModelAttribute Todo todo, @PathVariable("todoId") int todoId,
+			@PathVariable("listId") int listId, RedirectAttributes redirectAttributes){
 		todoService.finish(todoService.getTodoById(todoId));
 		redirectAttributes.addFlashAttribute("message", encomiumService.getRandomMessage());
 		

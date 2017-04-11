@@ -19,13 +19,14 @@
 		<a href="/TodolistApp/">Top</a>
 
 		<table>
-			<tr>
-				<f:form modelAttribute="encomium" action="encomium/create"
-					method="post">
+			<f:form modelAttribute="encomium" action="encomium/create"
+				method="post">
+				<tr>
 					<td><input type="text" id="message" name="message"></td>
 					<td><input type="submit" value="create"></td>
-				</f:form>
-			</tr>
+				</tr>
+				<tr><f:errors path="message" element="p" style="color:red" /></tr>
+			</f:form>
 			<c:forEach items="${allEncomium}" var="currentEncomium">
 				<tr>
 					<td>${currentEncomium.message}</td>

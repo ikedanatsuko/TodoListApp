@@ -22,15 +22,16 @@
 		<a href="/TodolistApp/search">検索</a> <a href="/TodolistApp/encomium">褒め言葉</a>
 
 		<table>
-			<tr>
-
-				<f:form modelAttribute="todoList" action="todolist/create"
-					method="post">
+			<f:form modelAttribute="todoList" action="todolist/create"
+				method="post">
+				<tr>
 					<td><input type="text" id="title" name="title"></td>
 					<td><input type="submit" value="create"></td>
-				</f:form>
-				</td>
-			</tr>
+				</tr>
+				<tr>
+					<f:errors path="title" element="p" style="color:red" />
+				</tr>
+			</f:form>
 			<c:forEach items="${allTodolist}" var="currentTodolist">
 				<tr>
 					<td><a href="/TodolistApp/todolist/${currentTodolist.id}/edit">${currentTodolist.title}</a>

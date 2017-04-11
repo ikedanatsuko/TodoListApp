@@ -20,12 +20,13 @@
 		<a href="/TodolistApp/">Top</a>
 
 		<table>
-			<tr>
-				<f:form modelAttribute="todo" action="todo/create" method="post">
+			<f:form modelAttribute="todo" action="todo/create" method="post">
+				<tr>
 					<td><input type="text" id="detail" name="detail"></td>
 					<td><input type="submit" value="create"></td>
-				</f:form>
-			</tr>
+				</tr>
+				<tr><f:errors path="detail" element="p" style="color:red" /></tr>
+			</f:form>
 			<c:forEach items="${todosByList}" var="currentTodo">
 				<tr>
 					<td>${currentTodo.detail}</td>
