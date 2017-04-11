@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class Todo {
 	
@@ -16,6 +18,7 @@ public class Todo {
 	@Column(name = "list_id")
 	private int listId; 
 	
+	@NotBlank
 	@Column(name = "detail")
 	private String detail;
 	

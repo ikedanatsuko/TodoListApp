@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class Encomium {
 	
@@ -11,6 +13,7 @@ public class Encomium {
 	@Column(name = "id")
 	private int id;
 	
+	@NotBlank
 	@Column(name = "message")
 	private String message;
 	

@@ -1,15 +1,9 @@
 package io.github.todolistapp.entity;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 //@Table(name = "todolist")
@@ -20,19 +14,15 @@ public class TodoList {
 	@Column(name = "id")
 	private int id;
 	
+	@NotBlank
 	@Column(name = "title")
 	private String title;
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "deadline")
-	private Date deadline;
 	
 	public TodoList() {
 	}
 	
-	public TodoList(String title, Date deadline) {
+	public TodoList(String title) {
 		this.title = title;
-		this.deadline = deadline;
 	}
 	
 	public void setId(int id) {
@@ -49,13 +39,5 @@ public class TodoList {
 	
 	public void setTitle(String title) {
 		this.title = title;
-	}
-	
-	public Date getDeadline() {
-		return deadline;
-	}
-	
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
 	}
 }
