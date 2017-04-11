@@ -10,11 +10,10 @@ import org.hibernate.validator.constraints.NotBlank;
 public class TodoList {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id")
 	private int id;
 	
-	@NotBlank
+	@NotBlank(message = "タイトルを入力してください")
 	@Column(name = "title")
 	private String title;
 	

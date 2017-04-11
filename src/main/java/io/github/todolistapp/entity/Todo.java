@@ -18,7 +18,7 @@ public class Todo {
 	@Column(name = "list_id")
 	private int listId; 
 	
-	@NotBlank
+	@NotBlank(message = "内容を入力してください")
 	@Column(name = "detail")
 	private String detail;
 	

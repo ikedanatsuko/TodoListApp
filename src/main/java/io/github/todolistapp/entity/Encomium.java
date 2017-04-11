@@ -13,7 +13,7 @@ public class Encomium {
 	@Column(name = "id")
 	private int id;
 	
-	@NotBlank
+	@NotBlank(message = "内容を入力してください")
 	@Column(name = "message")
 	private String message;
 	
