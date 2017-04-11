@@ -9,7 +9,7 @@
 </head>
 <body>
 	<center>
-		<h1 style="color: #ff0000">${message}</h1>
+		<h1 style="color:red">${message}</h1>
 
 		<a href="/TodolistApp/">Top</a>
 	</center>

@@ -26,7 +26,6 @@ public class HomeController {
 	@RequestMapping(value = { "/" })
 	public String index(ModelMap model) {
 		String key = BindingResult.MODEL_KEY_PREFIX + "todoList";
-		System.out.println(BindingResult.MODEL_KEY_PREFIX);
 		if (model.containsKey("result")) {
             model.addAttribute(key, model.get("result"));
         }
