@@ -26,6 +26,8 @@ public class TodoListDaoImpl implements TodoListDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	private String notFound = "Todoリストが見つかりません";
 
 	// Get todolist by id
 	public TodoList getTodolistById(int id) throws DataException {
@@ -38,7 +40,7 @@ public class TodoListDaoImpl implements TodoListDao {
 
 			return todolist;
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException("Todoリストが見つかりません");
+			throw new ServiceException(notFound);
 		}
 	}
 
@@ -69,7 +71,7 @@ public class TodoListDaoImpl implements TodoListDao {
 		try {
 			Map map = jdbcTemplate.queryForMap("SELECT * FROM todolist WHERE id= ?", todoList.getId());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException("Todoリストが見つかりません");
+			throw new ServiceException(notFound);
 		}
 		String sql = "UPDATE todolist SET title = ? WHERE id = ?";
 		jdbcTemplate.update(sql, todoList.getId());
@@ -79,7 +81,7 @@ public class TodoListDaoImpl implements TodoListDao {
 		try {
 			Map map = jdbcTemplate.queryForMap("SELECT * FROM todolist WHERE id= ?", todoList.getId());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException("Todoリストが見つかりません");
+			throw new ServiceException(notFound);
 		}
 		String sql = "DELETE FROM todolist WHERE id = ?";
 		jdbcTemplate.update(sql, todoList.getId());

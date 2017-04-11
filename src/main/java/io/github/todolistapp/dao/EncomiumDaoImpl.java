@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -19,15 +21,21 @@ public class EncomiumDaoImpl implements EncomiumDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	private String notFound = "褒め言葉が見つかりません";
+	
 	public Encomium getEncomiumById(int id) {
 		String sql = "SELECT * FROM encomium WHERE id= ?";
-		Map map = jdbcTemplate.queryForMap(sql, id);
-		Encomium encomium = new Encomium();
-		
-		encomium.setId((Integer)map.get("id"));
-		encomium.setMessage((String)map.get("message"));
-		
-		return encomium;
+		try {
+			Map map = jdbcTemplate.queryForMap(sql, id);
+			Encomium encomium = new Encomium();
+			
+			encomium.setId((Integer)map.get("id"));
+			encomium.setMessage((String)map.get("message"));
+			
+			return encomium;
+		} catch (EmptyResultDataAccessException e) {
+			throw new ServiceException(notFound);
+		}
 	}
 
 	public List<Encomium> getAllEncomium() {
