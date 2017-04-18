@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,7 +23,8 @@ public class TodoDaoImpl implements TodoDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private String notFound = "Todoが見つかりません";
+	@Autowired
+	private MessageSource messageSource;
 
 	public Todo getTodoById(int id) {
 		String sql = "SELECT * FROM todo WHERE id= ?";
@@ -37,7 +39,7 @@ public class TodoDaoImpl implements TodoDao {
 
 			return todo;
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException(notFound);
+			throw new ServiceException(messageSource.getMessage("todo.notFound", null, null));
 		}
 	}
 
@@ -109,7 +111,7 @@ public class TodoDaoImpl implements TodoDao {
 		try {
 			Map map = jdbcTemplate.queryForMap("SELECT * FROM todo WHERE id= ?", todo.getId());
 		} catch (Exception e) {
-			throw new ServiceException(notFound);
+			throw new ServiceException(messageSource.getMessage("todo.notFound", null, null));
 		}
 		String sql = "UPDATE todo SET list_id = ?, detail = ?, done = ? WHERE id = ?";
 		jdbcTemplate.update(sql, todo.getListId(), todo.getDetail(), todo.getDone(), todo.getId());
@@ -119,7 +121,7 @@ public class TodoDaoImpl implements TodoDao {
 		try {
 			Map map = jdbcTemplate.queryForMap("SELECT * FROM todo WHERE id= ?", todo.getId());
 		} catch (Exception e) {
-			throw new ServiceException(notFound);
+			throw new ServiceException(messageSource.getMessage("todo.notFound", null, null));
 		}
 		String sql = "DELETE FROM todo WHERE id = ?";
 		jdbcTemplate.update(sql, todo.getId());

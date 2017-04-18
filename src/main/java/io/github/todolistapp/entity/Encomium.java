@@ -5,15 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.PropertySource;
 
 @Entity
+@Configurable
 public class Encomium {
 	
 	@Id
 	@Column(name = "id")
 	private int id;
-	
-	@NotBlank(message = "内容を入力してください")
+
+	@NotBlank
 	@Column(name = "message")
 	private String message;
 	

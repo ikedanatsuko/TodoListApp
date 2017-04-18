@@ -7,8 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Configurable;
 
 @Entity
+@Configurable
 public class Todo {
 	
 	@Id
@@ -18,7 +20,7 @@ public class Todo {
 	@Column(name = "list_id")
 	private int listId; 
 	
-	@NotBlank(message = "内容を入力してください")
+	@NotBlank
 	@Column(name = "detail")
 	private String detail;
 	

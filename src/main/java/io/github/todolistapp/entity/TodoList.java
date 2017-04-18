@@ -4,16 +4,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Configurable;
 
 @Entity
-//@Table(name = "todolist")
+@Configurable
 public class TodoList {
 	
 	@Id
 	@Column(name = "id")
 	private int id;
 	
-	@NotBlank(message = "タイトルを入力してください")
+	@NotBlank
 	@Column(name = "title")
 	private String title;
 	

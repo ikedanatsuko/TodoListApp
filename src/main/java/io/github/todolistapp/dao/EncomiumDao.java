@@ -13,4 +13,8 @@ public interface EncomiumDao {
 	public String getRandomMessage();
 	
 	public void addEncomium(Encomium encomium);
+	
+	public void updateEncomium(Encomium encomium);
+	
+	public void removeEncomium(Encomium encomium);
 }

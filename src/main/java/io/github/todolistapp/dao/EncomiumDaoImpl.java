@@ -3,10 +3,12 @@ package io.github.todolistapp.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import io.github.todolistapp.entity.Encomium;
 import io.github.todolistapp.entity.Todo;
+import io.github.todolistapp.entity.TodoList;
 
 @Repository
 public class EncomiumDaoImpl implements EncomiumDao {
@@ -21,7 +24,8 @@ public class EncomiumDaoImpl implements EncomiumDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private String notFound = "褒め言葉が見つかりません";
+	@Autowired
+	private MessageSource messageSource;
 	
 	public Encomium getEncomiumById(int id) {
 		String sql = "SELECT * FROM encomium WHERE id= ?";
@@ -34,7 +38,7 @@ public class EncomiumDaoImpl implements EncomiumDao {
 			
 			return encomium;
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException(notFound);
+			throw new ServiceException(messageSource.getMessage("encomium.notFound", null, null));
 		}
 	}
 
@@ -65,5 +69,25 @@ public class EncomiumDaoImpl implements EncomiumDao {
 		
 		String sqlGetid = "SELECT setval('encomium_id_seq', (SELECT MAX(id) FROM encomium))";
 		encomium.setId(jdbcTemplate.queryForObject(sqlGetid, Integer.class));
+	}
+	
+	public void updateEncomium(Encomium encomium) {
+		try {
+			Map map = jdbcTemplate.queryForMap("SELECT * FROM encomium WHERE id= ?", encomium.getId());
+		} catch (EmptyResultDataAccessException e) {
+			throw new ServiceException(messageSource.getMessage("encomium.notFound", null, null));
+		}
+		String sql = "UPDATE encomium SET title = ? WHERE id = ?";
+		jdbcTemplate.update(sql, encomium.getId());
+	}
+
+	public void removeEncomium(Encomium encomium) {
+		try {
+			Map map = jdbcTemplate.queryForMap("SELECT * FROM encomium WHERE id= ?", encomium.getId());
+		} catch (EmptyResultDataAccessException e) {
+			throw new ServiceException(messageSource.getMessage("encomium.notFound", null, null));
+		}
+		String sql = "DELETE FROM encomium WHERE id = ?";
+		jdbcTemplate.update(sql, encomium.getId());
 	}
 }

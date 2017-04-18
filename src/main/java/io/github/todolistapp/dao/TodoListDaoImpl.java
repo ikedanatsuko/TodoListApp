@@ -1,24 +1,19 @@
 package io.github.todolistapp.dao;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.exception.DataException;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.jdbc.core.StatementCreatorUtils;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-
-import io.github.todolistapp.entity.Todo;
 import io.github.todolistapp.entity.TodoList;
 
 @Repository
@@ -27,9 +22,9 @@ public class TodoListDaoImpl implements TodoListDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private String notFound = "Todoリストが見つかりません";
+	@Autowired
+	private MessageSource messageSource;
 
-	// Get todolist by id
 	public TodoList getTodolistById(int id) throws DataException {
 		String sql = "SELECT * FROM todolist WHERE id= ?";
 		try {
@@ -40,11 +35,10 @@ public class TodoListDaoImpl implements TodoListDao {
 
 			return todolist;
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException(notFound);
+			throw new ServiceException(messageSource.getMessage("todoList.notFound", null, null));
 		}
 	}
 
-	// Get all todolist
 	public List<TodoList> getAllTodolist() {
 		String sql = "SELECT * FROM todolist";
 		List<TodoList> todolists = jdbcTemplate.query(sql, new RowMapper<TodoList>() {
@@ -71,7 +65,7 @@ public class TodoListDaoImpl implements TodoListDao {
 		try {
 			Map map = jdbcTemplate.queryForMap("SELECT * FROM todolist WHERE id= ?", todoList.getId());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException(notFound);
+			throw new ServiceException(messageSource.getMessage("todoList.notFound", null, null));
 		}
 		String sql = "UPDATE todolist SET title = ? WHERE id = ?";
 		jdbcTemplate.update(sql, todoList.getId());
@@ -81,7 +75,7 @@ public class TodoListDaoImpl implements TodoListDao {
 		try {
 			Map map = jdbcTemplate.queryForMap("SELECT * FROM todolist WHERE id= ?", todoList.getId());
 		} catch (EmptyResultDataAccessException e) {
-			throw new ServiceException(notFound);
+			throw new ServiceException(messageSource.getMessage("todoList.notFound", null, null));
 		}
 		String sql = "DELETE FROM todolist WHERE id = ?";
 		jdbcTemplate.update(sql, todoList.getId());

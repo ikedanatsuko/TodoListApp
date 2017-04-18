@@ -24,6 +24,12 @@
 				<property name="dataSource" ref="dataSource" />
 		</bean>
 
+		<!-- Error message source -->
+		<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+				<property name="basename" value="classpath:/messages" />
+				<property name="defaultEncoding" value="UTF-8" />
+		</bean>
+
 	  <bean
 			class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 				<!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
